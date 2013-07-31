@@ -24,6 +24,27 @@ in Finnish.</p>
 <p><a href="https://github.com/01org/webapps-slider-puzzle/">(Open)
 Source code here</a>.</p>
 </li>
+
+<li>
+<p><a href="mobi-reader/">mobi format ebook reader</a>, an experiment
+in reading binary data in the browser. Note that this has no server-side
+component: the mobi file unpacking, decompression and parsing is all
+done in client-side JavaScript. Also note that the results may vary
+in quality (there are some issues with character encodings for some mobi files,
+which may result in odd text appearing). I have taken the liberty of ignoring the
+table of contents for now. And I only know it works in Chrome (which
+supports ArrayBuffer and friends).</p>
+
+<p>This uses the excellent <a href="https://github.com/chrisdickinson/bops">bops</a>
+library, which provides a facsimile of node's built in buffer operations
+for use in the browser. It's used to read the binary data from the .mobi file.</p>
+
+<p>I used <a href="http://wiki.mobileread.com/wiki/PalmDOC#Format">this page
+about PalmDOC</a> (the compression format used inside mobi files) as a reference.
+I also adapted some code from <a href="https://github.com/siebert/mobiunpack">mobiunpack</a>.</p>
+</li>
+
 </ul>
+
 </body>
 </html>

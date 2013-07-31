@@ -1,0 +1,10 @@
+{
+  "name": "v2",
+  "version": "0.0.0",
+  "dependencies": {
+    "intel-appframework": "https://github.com/01org/appframework.git#~2.0.0",
+    "requirejs": "~2.1.8",
+    "requirejs-domready": "~2.0.1",
+    "bops": "https://github.com/chrisdickinson/bops.git"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "intel-appframework",
+  "homepage": "http://app-framework-software.intel.com/",
+  "description": "The definitive HTML5 mobile javascript framework",
+  "version": "2.0.0",
+  "keywords": [
+    "mobile",
+    "app",
+    "html5",
+    "hybrid",
+    "cordova",
+    "phonegap",
+    "tablet",
+    "touch"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/01org/appframework.git"
+  },
+  "main": "appframework.min.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "gitHead": "4a978bbed7e94549d86f048a1580cf6285bd44d0",
+  "readme": "# App Framework - a HTML5 targeted Javascript Framework\r\n\r\nApp Framework is a Javascript framework targeted at HTML5 browsers with a blazingly fast query selector library that supports W3C queries.  \r\n\r\nVisit <http://app-framework-software.intel.com/index.php> for more information, documentation, and support.\r\n\r\n# Contribute\r\n\r\nYou can contribute to the core code by forking it and make a pull request.  Please keep in mind we do not want to add functionality that is a one-off case.  These are best dealt with via plugins.\r\n\r\n\r\n# Bugs\r\n\r\nPlease use github issues and file any bugs with the following\r\n\r\n1. Any error messages from the console\r\n\r\n2. Line numbers of offending code\r\n\r\n3. Test cases\r\n\r\n4. Description of the Error\r\n\r\n5. Expected result\r\n\r\n6. Browser/Device you are testing on\r\n\r\n\r\n# License\r\n\r\nApp Framework is is licensed under the terms of the MIT License, see the included license.txt file.\r\n\r\nApp Framework uses code from the following software:\r\n\r\n1) Zepto.js - Thomas Fuchs (MIT X11 License)\r\n\r\n2) qUnit - jQuery Foundation (MIT X11 License)\r\n",
+  "readmeFilename": "README.md",
+  "_id": "intel-appframework@2.0.0"
+}
