@@ -57,6 +57,7 @@ require(
       return;
     }
 
+    $('#content').html('<p>Processing...</p>');
     var blob = localFileElt.files[0].slice(0);
     reader.readAsArrayBuffer(blob);
   });

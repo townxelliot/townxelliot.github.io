@@ -7,18 +7,6 @@ define(['bops'], function (binary) {
 
   var MobiUnpacker = function () {};
 
-  // convert each byte of ArrayBuffer arrBuffer to the corresponding
-  // ascii character
-  var toAscii = function (arrBuffer) {
-    var str = '';
-
-    for (var i = 0; i < arrBuffer.length; i += 1) {
-      str += String.fromCharCode(arrBuffer[i]);
-    }
-
-    return str;
-  };
-
   var getRecords = function (content) {
     // get header (first 78 bytes)
     var header = new Uint8Array(content.slice(0, 78));
@@ -78,14 +66,18 @@ define(['bops'], function (binary) {
   // see http://wiki.mobileread.com/wiki/PalmDOC#Format for PalmDOC format
   var palmUncompress = function (data) {
     data = new Uint8Array(data);
-    var out = [];
+
+    var out = binary.create(0);
     var buf = new Uint8Array(1);
+
+    // buffer representing a single space character
+    var space = binary.create(1);
+    binary.writeUInt8(space, 32, 0);
+
     var p = 0;
     var _byte;
-    var sliceEnd;
     var backReference;
     var numBytesToCopy;
-    var chunk;
     var chunkStart;
     var chunkEnd;
 
@@ -94,24 +86,22 @@ define(['bops'], function (binary) {
       p += 1;
 
       if (_byte >= 1 && _byte <= 8) {
-        sliceEnd = p + _byte;
-        if (sliceEnd > data.length) {
-          sliceEnd = data.length;
+        chunkEnd = p + _byte;
+        if (chunkEnd > data.length) {
+          chunkEnd = data.length;
         }
 
-        // to ascii string
-        out += toAscii(binary.subarray(data, p, sliceEnd));
+        out = binary.join([out, binary.subarray(data, p, chunkEnd)]);
 
         p += _byte;
       }
       else if (_byte < 128) {
         binary.writeUInt8(buf, _byte, 0);
-        out += toAscii(buf);
+        out = binary.join([out, buf]);
       }
       else if (_byte >= 192) {
-        out += ' ';
         binary.writeUInt8(buf, _byte ^ 0x80, 0);
-        out += toAscii(buf);
+        out = binary.join([out, space, buf]);
       }
       else if (p < data.length) {
         // combine with the 8 bits of the next byte (to give 16 bits)
@@ -136,11 +126,13 @@ define(['bops'], function (binary) {
         if (numBytesToCopy < backReference) {
           chunkStart = out.length - backReference;
           chunkEnd = chunkStart + numBytesToCopy;
-          out += out.slice(chunkStart, chunkEnd);
+          out = binary.join([out, binary.subarray(out, chunkStart, chunkEnd)]);
         }
         else {
           for (var j = 0; j < numBytesToCopy; j++) {
-            out += out[out.length - backReference];
+            chunkStart = out.length - backReference;
+            chunkEnd = chunkStart + 1;
+            out = binary.join([out, binary.subarray(out, chunkStart, chunkEnd)]);
           }
         }
 
@@ -158,13 +150,21 @@ define(['bops'], function (binary) {
     // encrypted?
     var encryption = binary.readInt16BE(metaRecord, 12);
 
+    // text encoding: 1252 === CP1252 (WinLatin1);
+    // 65001 === UTF-8
+    var encodingValue = binary.readInt32BE(metaRecord, 28);
+    var encoding = 'utf8';
+    if (encodingValue === 1252) {
+      encoding = 'latin1'
+    }
+
     // mobipocket version
     var version = binary.readInt32BE(metaRecord, 36);
 
     // figure out the type of compression: 1 == not compressed,
     // 0x4448 == Huffman/cdic compression, 2 == Palmdoc compression
     var uncompress = function (data) {
-      return toAscii(data);
+      return data;
     };
 
     var compression = binary.readInt16BE(metaRecord, 0);
@@ -180,6 +180,7 @@ define(['bops'], function (binary) {
 
     return {
       version: version,
+      encoding: encoding,
       encryption: encryption,
       compression: compression,
       uncompress: uncompress,
@@ -206,12 +207,12 @@ define(['bops'], function (binary) {
 
     // decompress sections, taking each individually and concatenating to
     // get the full text
-    var html = '';
+    var html = binary.create(0);
     for (var i = meta.firstContentRecord; i < meta.lastContentRecord; i++) {
-      html += meta.uncompress(records[i]);
+      html = binary.join([html, meta.uncompress(records[i])]);
     }
 
-    return html;
+    return binary.to(html, 'utf8');
   };
 
   return MobiUnpacker;
