@@ -40,7 +40,7 @@ define(['lodash', 'jquery', 'stapes'], function (_, $, Stapes) {
       url: oggBase + '/reading.ogg',
       meta: {
         title: 'I Want My Mixer',
-        artist: 'Slobbo the Blob'
+        artist: 'Peter Blob'
       }
     },
 
@@ -61,7 +61,7 @@ define(['lodash', 'jquery', 'stapes'], function (_, $, Stapes) {
       meta: {
         album: 'Mighty War Music',
         title: 'Briefs Encounter',
-        artist: 'Charley Plop',
+        artist: 'Charley Hassle',
         tracknum: 1
       }
     },
@@ -71,8 +71,8 @@ define(['lodash', 'jquery', 'stapes'], function (_, $, Stapes) {
       url: oggBase + '/reading.ogg',
       meta: {
         album: 'An Elaborate Evening\'s Entertainment with the Jocular Fellows',
-        title: 'I Have a Little Plop Tree',
-        artist: 'Charley Plop',
+        title: 'I Have a Little Tree',
+        artist: 'Charley Hassle',
         tracknum: 1
       }
     },
