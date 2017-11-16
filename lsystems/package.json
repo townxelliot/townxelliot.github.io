@@ -1,0 +1,42 @@
+{
+  "name": "artree",
+  "version": "0.1.0",
+  "description": "Artificial trees",
+  "homepage": "https://otc.intel.com/",
+  "copyright": "Intel",
+  "author": [
+    {
+      "name": "Elliot Smith",
+      "email": "elliot.smith@intel.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/org/project"
+  },
+  "bugs": {
+    "url": "http://github.com/org/project/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/org/project/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "js/main",
+  "engines": {
+    "node": "~0.8.14"
+  },
+  "scripts": {
+    "test": null
+  },
+  "dependencies": {
+    "node-uuid": "1.4.0",
+    "lodash": "1.0.1"
+  },
+  "devDependencies": {
+    "grunt": "0.4.1",
+    "jasmine-node": "1.4.0"
+  },
+  "keywords": []
+}
